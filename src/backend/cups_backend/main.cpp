@@ -276,7 +276,14 @@ int main(int argc, char *argv[])
     if (envPath != nullptr)
           path.append(":").append(envPath);
     setenv("PATH", path.c_str(), 1);
-
+    
+    // wait up to 10 s until the file become ready
+    struct stat buffer;
+    for(int i=0;i<100;i++){
+      if(stat (booFile.c_str(), &buffer) == 0) break;
+      usleep(100000);
+    }
+    
     execlp("boomaga",
            "boomaga",
            "--started-from-cups",
