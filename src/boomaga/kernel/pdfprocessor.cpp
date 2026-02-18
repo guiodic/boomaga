@@ -170,6 +170,7 @@ int PdfProcessor::walkPageTree(int pageNum, const PDF::Object &page, const PDF::
         catch (const QString &err)
         {
             qWarning() << QString("Error on page %1 %2: %3").arg(page.objNum()).arg(page.genNum()).arg(err);
+            return pageNum;
         }
 
         pageInfo.xObjNums << writePageAsXObject(page, inherited);
